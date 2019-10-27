@@ -10,8 +10,6 @@ class Course:
 def smarter_scrape(course):
 
   URL = "https://smartercapes.com/" + course.department + "/" + course.code
-
-  print(URL)
   
   r = requests.get(URL)
 

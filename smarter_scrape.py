@@ -1,42 +1,38 @@
 import requests
 from bs4 import BeautifulSoup
 
+class Course:
+  def __init__(self, department, code):
+    self.department = department
+    self.code = code
+    smarter_scrape(self)
 
-def smarter_scrape(courseNums):
+def smarter_scrape(course):
 
-  URL = "https://smartercapes.com/CSE/"
+  URL = "https://smartercapes.com/" + course.department + "/" + course.code
+
+  print(URL)
   
-  courses = []
-  
-  for num in courseNums:
+  r = requests.get(URL)
 
-    r = requests.get(URL + num)
+  soup = BeautifulSoup(r.content, 'html5lib')
 
-    soup = BeautifulSoup(r.content, 'html5lib')
+  table = soup.findAll('li')
+
+  teachers = []
+
+  for row in table:
+    teachers.append(row.text)
+
+  course.teachers = teachers
+
+  table = soup.findAll('h3')
+
+  course.avg_time = table[-2].text
+
+  course.avg_grade = table[-1].text
     
-    course = {}
-    
-    course['name'] = 'CSE ' + num
+tempCourse = Course("CSE", "11")
 
-    table = soup.findAll('li')
-    
-    teachers = []
+print (tempCourse.avg_grade)
 
-    for row in table:
-      teachers.append(row.text)
-
-    course['teachers'] = teachers
-
-    table = soup.findAll('h3')
-
-    course['avg_time'] = table[-2].text
-
-    course['avg_grade'] = table[-1].text
-
-    courses.append(course)
-    
-  return courses
-    
-courseNums = ['3', '11']
-
-print(smarter_scrape(courseNums))

@@ -1,17 +1,26 @@
-from PrereqScraper import getPrereqs
-
 class Course:
-  def __init__(self, code, name, fTeacher, wTeacher, sTeacher):
-		self.code = code
-		self.name = name
-		self.fTeacher = fTeacher
-		self.wTeacher = wTeacher
-		self.sTeacher = sTeacher
+  code = ""
+  name = ""
+  fTeacher = ""
+  wTeacher = ""
+  sTeacher = ""
+  prereqs = []
+
+  def __init__(self, department, code):
+    self.department = department
+    self.code = code
+  
+  """
+  def __init__(self, department, code, name, fTeacher, wTeacher, sTeacher):
+    self.department = department
+    self.code = code
+    self.name = name
+    self.fTeacher = fTeacher
+    self.wTeacher = wTeacher
+    self.sTeacher = sTeacher
     getPrereqs(self)
     smarter_scrapes(self)
-    
-
-
+  """
 
 class Requirement:
 	def __init__(self, courses):
